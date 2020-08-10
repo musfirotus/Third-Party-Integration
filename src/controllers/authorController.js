@@ -44,32 +44,6 @@ class AuthorController {
         }
     }
 
-    static async saveAuthor(req, res) {
-        const {
-            body: {username, password, salt, email, profile}
-        } = req;
-
-        try {
-            const saveAuthor = await authors.create({
-                username, password, salt, email, profile
-            });
-            response.data = {
-                Username: saveAuthor.username,
-                Salt: saveAuthor.salt,
-                email: saveAuthor.email,
-                Profile: saveAuthor.profile
-            };
-            response.status = true;
-            response.message = "Berhasil tambah data"
-            res.status(201).json(response);
-        } catch (error) {
-            response.status = "fail!";
-            response.data = '';
-            response.message = error.message;
-            res.status(400).json(response);
-        }
-    }
-
     static async getAuthor(req, res) {
         const { id } = req.params;
         const authordetail = await authors.findByPk(
@@ -102,6 +76,32 @@ class AuthorController {
           response.status = false;
           response.data = '';
           res.status(404).json(response);
+        }
+    }
+
+    static async saveAuthor(req, res) {
+        const {
+            body: {username, password, salt, email, profile}
+        } = req;
+
+        try {
+            const saveAuthor = await authors.create({
+                username, password, salt, email, profile
+            });
+            response.data = {
+                Username: saveAuthor.username,
+                Salt: saveAuthor.salt,
+                email: saveAuthor.email,
+                Profile: saveAuthor.profile
+            };
+            response.status = true;
+            response.message = "Berhasil tambah data"
+            res.status(201).json(response);
+        } catch (error) {
+            response.status = "fail!";
+            response.data = '';
+            response.message = error.message;
+            res.status(400).json(response);
         }
     }
     
